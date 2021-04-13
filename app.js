@@ -4,7 +4,7 @@ const reviews = [
       name: "susan smith",
       job: "web developer",
       img:
-        "https://res.cloudinary.com/diqqf3eq2/image/upload/v1586883334/person-1_rfzshl.jpg",
+        "melih.jpg",
       text:
         "I'm baby meggings twee health goth +1. Bicycle rights tumeric chartreuse before they sold out chambray pop-up. Shaman humblebrag pickled coloring book salvia hoodie, cold-pressed four dollar toast everyday carry",
     },
@@ -48,13 +48,39 @@ const prevBtn = document.querySelector('.prev-btn')
 const nextBtn = document.querySelector('.next-btn')
 const randomBtn = document.querySelector('.random-btn')
 
-let currentItem = 2;
+let currentItem = 0 ;
 
 window.addEventListener('DOMContentLoaded',function(){
-    const item = reviews[currentItem];
-    console.log(item.img)
-    img.src = item.img;
-    author.textContent = item.name;
-    job.textContent = item.job;
-    info.textContent = item.text
+    showPerson()
+
+})
+
+function showPerson(){
+  const item = reviews[currentItem];
+  img.src = item.img;
+  author.textContent = item.name;
+  job.textContent = item.job;
+  info.textContent = item.text
+}
+
+nextBtn.addEventListener('click', function(){
+  currentItem++;
+  if(currentItem > reviews.length - 1){
+     currentItem = 0;
+  }
+  showPerson(currentItem);
+})
+
+prevBtn.addEventListener('click', function(){
+  currentItem--;
+  if(currentItem < 0){
+     currentItem = reviews.length - 1;  
+  }
+  showPerson();
+})
+
+randomBtn.addEventListener('click', function(){
+  
+  currentItem = Math.floor(Math.random() * reviews.length);
+  showPerson();
 })
