@@ -85,8 +85,22 @@ const menu = [
 
   window.addEventListener('DOMContentLoaded' , function() {
       let displayMenu = menu.map(function(item){
-                
-        return `<h4>${item.title}</h4>`;
+         // https://www.youtube.com/watch?v=3PHXvlpOkf4    -> 2.34       
+        return `
+        <article class="menu-item">
+            <img src=${item.img} alt="menu item" class="photo" />
+            <div class="item-info">
+                <header>
+                    <h4>buttermilk pancakes</h4>
+                    <h4 class="price">$15</h4>
+                </header>
+                <p class="item-text">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Repudiandae, sint quam. Et reprehenderit fugiat nesciunt inventore
+                    laboriosam excepturi! Quo, officia.
+                </p>
+            </div>
+      </article>`;
 
       })
 
