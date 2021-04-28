@@ -106,6 +106,13 @@ const menu = [
 
   window.addEventListener('DOMContentLoaded' , function() {
       displayMenu(menu);
+      const categories = menu.reduce(function(values , item) {
+        if(!values.includes(item.category)){
+          return values.push(item.category)
+        }
+        return values;
+      },['all'])
+      console.log(categories)
   })
 
 
