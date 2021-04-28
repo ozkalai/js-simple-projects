@@ -82,27 +82,50 @@ const menu = [
   ];
   
   const sectionCenter = document.querySelector(".section-center");
+  let filterBtns = document.querySelectorAll(".filter-btn")
+
+  // console.log(filterBtns);
+
+  filterBtns.forEach(function(btn) {  
+    btn.addEventListener("click" , function(e) {
+        let category = e.currentTarget.dataset.id;
+        let menuCategory = menu.filter(function(menuItem) {
+          if(menuItem.category === category) {
+            return menuItem;
+          }
+        })
+        if(category === "all"){
+          return displayMenu(menu)
+        }
+        else{
+          displayMenu(menuCategory)
+        }
+    })
+  })
+
 
   window.addEventListener('DOMContentLoaded' , function() {
-      let displayMenu = menu.map(function(item){
-         // https://www.youtube.com/watch?v=3PHXvlpOkf4    -> 2.34       
-        return `
-        <article class="menu-item">
-            <img src=${item.img} alt="menu item" class="photo" />
-            <div class="item-info">
-                <header>
-                    <h4>buttermilk pancakes</h4>
-                    <h4 class="price">$15</h4>
-                </header>
-                <p class="item-text">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Repudiandae, sint quam. Et reprehenderit fugiat nesciunt inventore
-                    laboriosam excepturi! Quo, officia.
-                </p>
-            </div>
-      </article>`;
-
-      })
-
-      console.log(displayMenu);
+      displayMenu(menu);
   })
+
+
+
+  function displayMenu(menuItem) {
+    let displayMenu = menuItem.map(function(item){
+      return `
+      <article class="menu-item">
+          <img src=${item.img} alt=${item.title} class="photo" />
+          <div class="item-info">
+              <header>
+                  <h4>${item.title}</h4>
+                  <h4 class="price">${item.price}</h4>
+              </header>
+              <p class="item-text">
+                  ${item.desc}
+              </p>
+          </div>
+    </article>`;
+    
+    })
+    sectionCenter.innerHTML = displayMenu.join("")
+  }
