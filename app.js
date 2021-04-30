@@ -1,21 +1,55 @@
-const btns = document.querySelectorAll(".tab-btn");
-const about = document.querySelector(".about");
-const articles = document.querySelectorAll(".content");
+const months = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
+const weekdays = [
+  "Sunday",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+];
 
-about.addEventListener("click" , function(e) {
-  const id = e.target.dataset.id;
-  if(id){
-    //remove active from all btns 
-    btns.forEach(function(btn){
-      btn.classList.remove("active");
-      e.target.classList.add("active")
-    });
-    // hide other articles
-    articles.forEach(function(article) {
-      article.classList.remove("active")
-    })
-    const element = document.getElementById(id);
-    console.log(element)
-    element.classList.add("active")
-  }
-})
+const giveaway = document.querySelector(".giveaway");
+const deadline = document.querySelector(".deadline");
+const items = document.querySelectorAll(".deadline-format h4")
+
+let futureDate = new Date(2021,4,24,11,30,0) ;
+
+const year = futureDate.getFullYear();
+const hours = futureDate.getHours();
+const minutes = futureDate.getMinutes();
+
+let month = futureDate.getMonth();
+month = months[month]
+const date = futureDate.getDate();
+
+const weekday = weekdays[futureDate.getDay()];
+console.log(weekday)
+
+
+console.log(date)
+giveaway.textContent = `giveaway ends on ${weekday} ${date} ${month} ${year} ${hours}:${minutes}am`
+
+// future time in ms 
+
+const futureTime = futureDate.getTime();
+function getRemainingTime(){
+  const today = new Date().getTime();
+  const t = futureTime - today;
+  console.log(t)
+}
+
+getRemainingTime();
