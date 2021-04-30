@@ -81,39 +81,19 @@ const menu = [
     },
   ];
   
-  const sectionCenter = document.querySelector(".section-center");
-  let filterBtns = document.querySelectorAll(".filter-btn")
+  const sectionCenter = document.querySelector(".section-center")
+  const container = document.querySelector(".btn-container")
+  
 
   // console.log(filterBtns);
 
-  filterBtns.forEach(function(btn) {  
-    btn.addEventListener("click" , function(e) {
-        let category = e.currentTarget.dataset.id;
-        let menuCategory = menu.filter(function(menuItem) {
-          if(menuItem.category === category) {
-            return menuItem;
-          }
-        })
-        if(category === "all"){
-          return displayMenu(menu)
-        }
-        else{
-          displayMenu(menuCategory)
-        }
-    })
-  })
+ 
 
 
   window.addEventListener('DOMContentLoaded' , function() {
       displayMenu(menu);
-      const categories = menu.reduce(function(values , item) {
-        if(!values.includes(item.category)){
-          return values.push(item.category)
-        }
-        return values;
-      },['all'])
-      console.log(categories)
-  })
+      displayMenuButtons();
+})
 
 
 
@@ -135,4 +115,35 @@ const menu = [
     
     })
     sectionCenter.innerHTML = displayMenu.join("")
+  }
+
+  function displayMenuButtons() {
+    const categories = menu.reduce(function(values , item) {
+      if(!values.includes(item.category)){
+        values.push(item.category)
+      }
+      return values;
+    },['all'])
+    const categoryBtns = categories.map(function(category){
+      return `<button type="button" class="filter-btn" data-id="${category}">${category}
+      </button>`
+    }).join("");
+    container.innerHTML = categoryBtns
+    let filterBtns = document.querySelectorAll(".filter-btn")
+    filterBtns.forEach(function(btn) {  
+      btn.addEventListener("click" , function(e) {
+        let category = e.currentTarget.dataset.id;
+        let menuCategory = menu.filter(function(menuItem) {
+          if(menuItem.category === category) {
+            return menuItem;
+          }
+        })
+        if(category === "all"){
+          return displayMenu(menu)
+        }
+        else{
+          displayMenu(menuCategory)
+        }
+    })
+  })
   }
