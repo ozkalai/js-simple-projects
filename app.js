@@ -16,6 +16,14 @@
  // EVENT LISTENERS
 // submit form 
 form.addEventListener("submit" ,addItem)
+//clear items 
+clearBtn.addEventListener("click",clearItems)
+
+const deleteBtn = document.querySelector(".delete-btn");
+ 
+
+
+
 
 // functions 
 function addItem(e) {
@@ -40,10 +48,22 @@ function addItem(e) {
         <i class="fas fa-trash"></i>
       </button>
     </div>`
+    const deleteBtn = element.querySelector(".delete-btn");
+    const editBtn = element.querySelector(".edit-btn");
+    deleteBtn.addEventListener("click" ,deleteItem);
+    editBtn.addEventListener("click" ,editItem);
+
+    
     // append child 
      list.appendChild(element);
      // display alert 
      displayAlert("item added to the list" , "success")
+     // show container
+     container.classList.add("show-container");
+     // add to local storage 
+    addToLocalStorage(id, value);
+    //set back to default
+    setBackToDefault() 
   }else if(!value && editFlag){
     console.log("editing")
   }else{
@@ -60,4 +80,57 @@ setTimeout(function(){
   alert.classList.remove(`alert-${action}`);
   },1000)
 }
+//  clear items 
+function clearItems(){
+  const items = document.querySelectorAll(".grocery-item")
 
+
+  if(items.length > 0){
+    items.forEach(function(item){
+      list.removeChild(item)
+    })
+  }
+  container.classList.remove("show-container")
+  displayAlert("empty list","danger");
+  setBackToDefault();
+  // localStorage.removeItem("list")
+}
+// delete function
+function deleteItem(e){
+  const element = e.currentTarget.parentElement.parentElement;
+  const id = element.dataset.id;
+  console.log(element)
+  console.log(list)
+  list.removeChild(element)
+  if(list.children.length === 0){
+    container.classList.remove("show-container")
+  }
+  displayAlert("item removed","danger")s
+  setBackToDefault();
+  // remove from local storage
+  removeFromLocalStorage(id);
+}
+// edit function
+function editItem(e){
+  const element = e.currentTarget.parentElement.parentElement;
+  // set edit item 
+  editElement = e.currentTarget.parentElement
+  console.log(editElement)
+}
+
+//set back to default
+function setBackToDefault(){
+  grocery.value = "";
+  editFlag = false;
+  editID = "";
+  submitBtn.textContent = "submit";
+}
+
+
+// local storage
+function addToLocalStorage(id, value){
+  console.log("added to local storage");
+}
+function removeFromLocalStorage(id) {
+  
+}
