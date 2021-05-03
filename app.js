@@ -64,8 +64,13 @@ function addItem(e) {
     addToLocalStorage(id, value);
     //set back to default
     setBackToDefault() 
-  }else if(!value && editFlag){
-    console.log("editing")
+  }else if(value && editFlag){
+    editElement.innerHTML = value;
+    displayAlert("value changed" , "success");
+    // edit local storage
+    editLocalStorage(editID,value);
+    setBackToDefault();
+
   }else{
     displayAlert("please enter value", "danger")
   }
@@ -105,7 +110,7 @@ function deleteItem(e){
   if(list.children.length === 0){
     container.classList.remove("show-container")
   }
-  displayAlert("item removed","danger")s
+  displayAlert("item removed","danger")
   setBackToDefault();
   // remove from local storage
   removeFromLocalStorage(id);
@@ -114,7 +119,11 @@ function deleteItem(e){
 function editItem(e){
   const element = e.currentTarget.parentElement.parentElement;
   // set edit item 
-  editElement = e.currentTarget.parentElement
+  editElement = e.currentTarget.parentElement.previousElementSibling;
+  grocery.value = editElement.innerHTML;
+  editFlag = true;
+  editID = element.dataset.id;
+  submitBtn.textContent = "edit"
   console.log(editElement)
 }
 
@@ -129,8 +138,21 @@ function setBackToDefault(){
 
 // local storage
 function addToLocalStorage(id, value){
-  console.log("added to local storage");
+  const grocery = {id,value};
+  let items = getLocalStorage();
+  items.push(grocery);
+  localStorage.setItem("list",JSON.stringify(items))
 }
 function removeFromLocalStorage(id) {
-  
+  let items = getLocalStorage();
+  items = items.filter(function(item){
+    if(item.id !== id){
+      return item
+    }
+  })
+  localStorage.setItem("list",JSON.stringify(items))
+}
+function editLocalStorage(id,value){}
+function getLocalStorage(){
+  return localStorage.getItem("list")?JSON.parse(localStorage.getItem("list")):[];
 }
